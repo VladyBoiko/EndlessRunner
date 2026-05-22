@@ -15,6 +15,9 @@ namespace Animation
         [SerializeField] private string _ledgeClimbState = "LedgeClimb";
         [SerializeField] private string _ledgeHangState = "LedgeHang";
         
+        [Header("Animator Parameters")]
+        [SerializeField] private string _speed = "Speed";
+        
         [Header("Animation Parameters")]
         [SerializeField] private float _crossFadeTime = 0.125f;
         
@@ -27,6 +30,9 @@ namespace Animation
         public string SlideState => _slideState;
         public string LedgeClimbState => _ledgeClimbState;
         public string LedgeHangState => _ledgeHangState;
+        
+        // Animator parameters
+        public string Speed => _speed;
         
         // CrossFade time for transitioning between animations
         public float CrossFadeTime => _crossFadeTime;

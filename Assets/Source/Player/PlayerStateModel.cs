@@ -2,11 +2,17 @@ namespace Player
 {
     public class PlayerStateModel
     {
+        public float Speed { get; private set; }
         public int JumpCount { get; private set; }
         public bool IsOnWall { get; private set; }
         public bool IsHanging { get; private set; }
         public bool IsClimbing { get; private set; }
         public float HangCooldownTimer { get; private set; }
+        
+        public void SetSpeed(float speed)
+        {
+            Speed = speed >= 0 ? speed : 0;
+        }
         
         public void AddJumpCount()
         {

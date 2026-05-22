@@ -10,24 +10,25 @@ namespace Player
         private readonly Rigidbody2D _rigidbody;
         private readonly PlayerConfig _playerConfig;
         // private readonly InputController _inputController;
-        // private readonly PlayerStateModel _state;
+        private readonly PlayerStateModel _state;
         
         // private float _localDirection;
+        private float _maxSpeed;
         private float _currentSpeed;
         private Vector2 _currentPosition;
         
         public PlayerMovementState(StateMachine stateMachine,
             byte stateId,
             Rigidbody2D rigidbody,
-            PlayerConfig playerConfig/*,
-            InputController inputController,
-            PlayerStateModel state*/)
+            PlayerConfig playerConfig,
+            // InputController inputController,
+            PlayerStateModel state)
             : base(stateMachine, stateId)
         {
             _rigidbody = rigidbody;
             _playerConfig = playerConfig;
             // _inputController = inputController;
-            // _state = state;
+            _state = state;
             
             conditions = new List<IStateCondition>
             {
@@ -36,6 +37,7 @@ namespace Player
             };
             
             _currentSpeed = _playerConfig.MoveSpeed;
+            _maxSpeed = _playerConfig.MaxSpeed;
             _currentPosition = _rigidbody.position;
             
             // _inputController.OnMovementInput += MovementInputHandler;
@@ -43,11 +45,15 @@ namespace Player
         
         protected override void OnUpdate(float deltaTime)
         {
-            float distance = (_rigidbody.position - _currentPosition).magnitude;
-            _currentSpeed = Mathf.Min(_currentSpeed + (_playerConfig.SpeedGrowth * distance), _playerConfig.MaxSpeed);
-            // Debug.Log(_currentSpeed);
             _rigidbody.linearVelocity = new Vector2(_currentSpeed, _rigidbody.linearVelocity.y);
-            
+            if (_currentSpeed <= _maxSpeed)
+            {
+                float distance = (_rigidbody.position - _currentPosition).magnitude;
+                _currentSpeed = Mathf.Min(_currentSpeed + (_playerConfig.SpeedGrowth * distance), _maxSpeed);
+                // Debug.Log(_currentSpeed);
+                _state.SetSpeed(_currentSpeed);
+            }
+
             // _rigidbody.linearVelocity = new Vector2(_localDirection * _playerConfig.MoveSpeed, 
             //     _rigidbody.linearVelocity.y);
 

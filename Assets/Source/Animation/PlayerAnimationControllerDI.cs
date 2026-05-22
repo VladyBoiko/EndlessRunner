@@ -21,6 +21,8 @@ public class PlayerAnimationControllerDI : IStartable, ITickable, IDisposable
     private readonly int _ledgeClimbState;
     private readonly int _ledgeHangState;
 
+    private readonly int _speed;
+    
     private PlayerControllerState _currentState;
     private bool _wasOnWall;
     private int _lastPlayedAnimHash;
@@ -45,6 +47,8 @@ public class PlayerAnimationControllerDI : IStartable, ITickable, IDisposable
         _slideState = Animator.StringToHash(animationConfig.SlideState);
         _ledgeClimbState = Animator.StringToHash(animationConfig.LedgeClimbState);
         _ledgeHangState = Animator.StringToHash(animationConfig.LedgeHangState);
+
+        _speed = Animator.StringToHash(animationConfig.Speed);
     }
 
     public void Start()
@@ -56,6 +60,7 @@ public class PlayerAnimationControllerDI : IStartable, ITickable, IDisposable
     {
         if (_currentState == PlayerControllerState.Movement)
         {
+            _animator.SetFloat(_speed, _state.Speed);
             if (_wasOnWall == _state.IsOnWall) return;
             CrossFadeIfNeeded(_state.IsOnWall ? _idleState : _movementState);
             _wasOnWall = _state.IsOnWall;

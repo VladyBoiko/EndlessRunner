@@ -63,9 +63,9 @@ namespace Player
                     _stateMachine,
                     (byte)PlayerControllerState.Movement,
                     _rigidbody, 
-                    _playerConfig/*, 
-                    _inputController,
-                    _state*/));
+                    _playerConfig, 
+                    // _inputController,
+                    _state));
             
             _stateMachine.AddState((byte)PlayerControllerState.Fall,
                 new PlayerFallingState(

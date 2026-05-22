@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 10
   _maxSpeed: 15
-  _speedGrowth: 0.0001
+  _speedGrowth: 0.001
   _jumpForce: 8
   _maxJumpCount: 2
   _slideSpeed: 15
